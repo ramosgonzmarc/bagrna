@@ -1,2 +1,10 @@
+working_directory: /home/socram/tmp
 experiment_name: polycomb
 number_samples: 4
+path_genome: /home/socram/rnaseqdata/chr5.fa
+path_annotation: /home/socram/rnaseqdata/chr5.gtf
+path_sample_1: /home/socram/rnaseqdata/col0_7dag_chr5_1.fastq.gz
+path_sample_2: /home/socram/rnaseqdata/col0_7dag_chr5_2.fastq.gz
+path_sample_3: /home/socram/rnaseqdata/abc_7dag_chr5_1.fastq.gz
+path_sample_4: /home/socram/rnaseqdata/abc_7dag_chr5_2.fastq.gz
+
