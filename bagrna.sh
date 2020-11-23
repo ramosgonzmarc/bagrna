@@ -1,12 +1,13 @@
 #! /bin/bash
 
-##Help message:
+##Help message: when no parameter is provided
 if [ $# -ne 1 ]
 then
   echo "The number of arguments is: $#"
   echo "Usage: bash bagrna.sh <params_file>"
   echo ""
   echo "params.file: Input file with the parameters"
+  echo "An example of params can be found in the test folder"
   exit
 fi
 
@@ -27,6 +28,7 @@ GENOME=$(grep path_genome: $PARAMS | awk '{print($2)}')
 echo "Reference genome = $GENOME"
 ANNOTATION=$(grep path_annotation: $PARAMS | awk '{print($2)}')
 echo "Annotation= $ANNOTATION"
+
 SAMPLES=()
 i=0
 while [ $i -lt $NUMSAMPLES ]
@@ -69,6 +71,14 @@ do
 	cp ${SAMPLES[$j]} sample_$i.fq.gz
 	cd ..
 	((i++))
+done
+
+cd ../results
+
+i=1
+while [ $i -le $NUMSAMPLES ]
+do
+   qsub -o sample_$i -N sample_$i rna_sample_processing $WD/$EXP/samples/sample_$i $i $NUMSAMPLES
 done
 
 
