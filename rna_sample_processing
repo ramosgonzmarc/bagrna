@@ -6,7 +6,13 @@
 SAMPLEDIR=$1
 i=$2
 NUMSAMPLES=$3
+INSDIR=$4
 
+echo ""
+echo "========================"
+echo "| PROCESSING SAMPLE $i |"
+echo "========================"
+echo ""
 
 cd ${SAMPLEDIR} 
 
@@ -34,5 +40,11 @@ NUM_PROC=$(wc -l ../../results/blackboard)
 
 if [ $NUM_PROC -eq $NUMSAMPLES ]
 then
-
+   qsub -o merge -N merge $INSDIR/bagrna/transcriptome_merging ${SAMPLEDIR}/../../results
 fi
+
+echo ""
+echo "=================="
+echo "| SAMPLE $i DONE |"
+echo "=================="
+echo ""
