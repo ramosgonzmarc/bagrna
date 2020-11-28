@@ -13,6 +13,7 @@ fi
 
 PARAMS=$1
 
+echo ""
 echo "==================="
 echo "LOADING PARAMETERS:"
 echo "==================="
@@ -24,7 +25,7 @@ WD=$(grep working_directory: $PARAMS | awk '{print($2)}')
 echo "Working directory = $WD"
 EXP=$(grep experiment_name: $PARAMS | awk '{ print($2)}')
 echo "Experiment name= $EXP"
-NUMSAMPLES=$(grep number_samples: $PARAMS | awk '{ print($2)}')
+NUMSAMPLES=$(grep number_samples: $PARAMS | awk '{print($2)}')
 echo "Number of samples = $NUMSAMPLES"
 
 GENOME=$(grep path_genome: $PARAMS | awk '{print($2)}')
@@ -45,7 +46,9 @@ echo "Samples="
 echo "${SAMPLES[@]}"
 
 ##Generating work space
-echo "==============="
+echo "====================="
+echo "GENERATING WORK SPACE"
+echo "====================="
 
 cd $WD
 mkdir $EXP
@@ -64,6 +67,12 @@ extract_exons.py annotation.gtf > annot_exons.exon
 cd ../genome
 hisat2-build --ss ../annotation/annot_splice.ss --exon ../annotation/annot_exons.exon genome.fa index
 
+echo ""
+echo "============="
+echo "INDEX CREATED"
+echo "============="
+echo ""
+
 cd ../samples
 i=1
 while [ $i -le $NUMSAMPLES ]
@@ -81,8 +90,8 @@ cd ../results
 i=1
 while [ $i -le $NUMSAMPLES ]
 do
-   qsub -o sample_$i -N sample_$i $INSDIR/bagrna/rna_sample_processing $WD/$EXP/samples/sample_$i $i $NUMSAMPLES $INSDIR
-   ((i++))
+	qsub -o sample_$i -N sample_$i $INSDIR/bagrna/rna_sample_processing $WD/$EXP/samples/sample_$i $i $NUMSAMPLES $INSDIR
+	((i++))
 done
 
 echo ""
