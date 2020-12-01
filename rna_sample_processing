@@ -31,6 +31,10 @@ stringtie -G ../../annotation/annotation.gtf -o sample_$i.gtf -l sample_$i sampl
 ## Preparing merge list file for transcriptome merging
 echo ${SAMPLEDIR}/sample_$i.gtf >> ../../results/merge_list.txt
 
+#Gene expression quantification
+stringtie -e -B -G ../../annotation/annotation.gtf -o sample_$i.gtf sample_$i.bam
+
+
 #Write on blackboard
 echo "sample_$i done!!" >> ../../results/blackboard
 
